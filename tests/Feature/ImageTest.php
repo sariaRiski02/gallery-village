@@ -13,13 +13,23 @@ use function PHPUnit\Framework\assertTrue;
 class ImageTest extends TestCase
 {
 
-    public function test_Validated_Error()
+    // list image 
+    public function test_listImage()
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertViewIs('app');
+    }
+
+
+    public function test_Validation_Errors()
     {
 
         $response = $this->post('/add-image', [
             'image' => 'tidak ada image'
         ]);
 
+        $response->assertStatus(302);
         $response->assertSessionHasErrors(['image']);
     }
 
